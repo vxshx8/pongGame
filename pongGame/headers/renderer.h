@@ -18,6 +18,8 @@ public:
 	void DrawPillars(SDL_Rect* Pillar1, SDL_Rect* Pillar2);
 	void drawSquare(SDL_Rect* square);
 	void DrawText(int point, int position);
+	SDL_Renderer *getRenderer() {return Renderer;}
+	SDL_Window *getWindow() { return window; }
 private:
 	
 	int h, w;

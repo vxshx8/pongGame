@@ -12,20 +12,60 @@ game::game(const char* title, int width, int height) {
 	points1 = points2 = 0;
 	turn = true;
 	isRunning = true;
-
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	(void)io;
+	ImGui_ImplSDL2_InitForSDLRenderer(Ren.getWindow(),Ren.getRenderer());
+	ImGui_ImplSDLRenderer2_Init(Ren.getRenderer());
+	ImGui::StyleColorsDark();
 }
 
 
 //clear and present the game
 void game::update() {
-	Ren.clear();
-	Ren.drawBorders();
-	Ren.DrawPillars(&Pillar1,&Pillar2);
-	Ren.drawSquare(&Square);
-	Ren.DrawText(points1, 0);
-	Ren.DrawText(points2, 1);
-	moveSquare();
-	points();
+
+
+	if (!gameOver) {
+		Ren.clear();
+		Ren.drawBorders();
+		Ren.DrawPillars(&Pillar1, &Pillar2);
+		Ren.drawSquare(&Square);
+		Ren.DrawText(points1, 0);
+		Ren.DrawText(points2, 1);
+		moveSquare();
+		points();
+		checkGameover();
+		Ren.present();
+	}
+	else {
+		gameOverOptions();
+	}	
+}
+
+void game::gameOverOptions() {
+	ImGui_ImplSDLRenderer2_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	ImGui::Begin("Game Over",nullptr,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+
+	ImGui::Text("Jogo finalizado!");
+	ImGui::Text("Pontuação Final - Player 1: %d | Player 2: %d", points1, points2);
+
+	if (ImGui::Button("Novo Jogo")) {
+		resetSquare();
+		resetGame();
+	}
+
+	if (ImGui::Button("Sair")) {
+		exit(0);
+	}
+
+	ImGui::End();
+
+	ImGui::Render();
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), Ren.getRenderer());
 	Ren.present();
 }
 
@@ -104,6 +144,7 @@ void game::moveSquare() {
 void game::HandleEvents() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
+		ImGui_ImplSDL2_ProcessEvent(&event);
 		switch (event.type)
 		{
 		case (SDL_QUIT):
@@ -126,4 +167,7 @@ void game::HandleEvents() {
 
 game::~game() {
 	Ren.close();
+	ImGui_ImplSDLRenderer2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 }
