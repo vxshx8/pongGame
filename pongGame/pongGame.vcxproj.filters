@@ -16,6 +16,9 @@
     <Filter Include="Source Files\imgui">
       <UniqueIdentifier>{64acd208-7358-4a98-9320-097cf0b3d81d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{b7d11a14-6b39-49d7-8c1f-b1c003a633e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -56,5 +59,19 @@
     <ClInclude Include="headers\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\lib\x64\SDL2.lib">
+      <Filter>lib</Filter>
+    </Library>
+    <Library Include="..\lib\x64\SDL2_ttf.lib">
+      <Filter>lib</Filter>
+    </Library>
+    <Library Include="..\lib\x64\SDL2main.lib">
+      <Filter>lib</Filter>
+    </Library>
   </ItemGroup>
 </Project>
