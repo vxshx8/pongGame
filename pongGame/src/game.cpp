@@ -35,6 +35,7 @@ void game::update() {
 		Ren.DrawText(points2, 1);
 		moveSquare();
 		points();
+		movePillars();
 		checkGameover();
 		Ren.present();
 	}
@@ -70,35 +71,19 @@ void game::gameOverOptions() {
 }
 
 //function to set the movements from the pillars int the y axis
-void game::movePillars(int flag) {
-	const float fps = 1000.0f / 60;
-	if (turn) {
-		if (flag == 1) {
-			if (Pillar1.y > 0) {
-				Pillar1.y -= 5 * speed ;
-			}
+void game::movePillars() {
 
-		}
-		else {
-			if (Pillar1.y + Pillar1.h < 800) {
-				Pillar1.y += 5 * speed;
-			}
-
-		}
+	if (keyState[SDLK_w] && Pillar1.y > 0) {
+		Pillar1.y -= 5 * speed;
 	}
-	else {
-		if (flag == 1) {
-			if (Pillar2.y > 0) {
-				Pillar2.y -= 5 * speed ;
-			}
-
-		}
-		else {
-			if (Pillar2.y + Pillar2.h < 800) {
-				Pillar2.y += 5 * speed;
-			}
-
-		}
+	if (keyState[SDLK_s] && Pillar1.y + Pillar1.h < 800) {
+		Pillar1.y += 5 * speed;
+	}
+	if (keyState[SDLK_UP] && Pillar2.y > 0) {
+		Pillar2.y -= 5 * speed;
+	}
+	if (keyState[SDLK_DOWN] && Pillar2.y + Pillar2.h < 800) {
+		Pillar2.y += 5 * speed;
 	}
 	
 }
@@ -151,12 +136,11 @@ void game::HandleEvents() {
 			isRunning = false;
 			break;
 		case SDL_KEYDOWN:
-			if (event.key.keysym.sym == SDLK_w || event.key.keysym.sym == SDLK_UP) {
-				movePillars(1);
-			}
-			else if (event.key.keysym.sym == SDLK_s || event.key.keysym.sym == SDLK_DOWN) {
-				movePillars(0);
-			}
+			updateKeyState(event.key.keysym.sym, true);
+			break;
+		case SDL_KEYUP:
+			updateKeyState(event.key.keysym.sym, false);
+			break;
 		default:
 			break;
 		}
