@@ -6,7 +6,7 @@
 int main(int argc, char* argv[]) {
 
 
-	game g("titulo",800,800);
+	game g("PongGame",800,800);
 	
 	while (g.IsRunning()) {
 		g.HandleEvents();
