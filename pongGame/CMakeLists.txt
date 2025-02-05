@@ -27,7 +27,7 @@ include_directories(
 link_directories(${CMAKE_SOURCE_DIR}/../lib/x64)
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
-add_executable(MeuPrograma src/main.cpp src/renderer.cpp src/game.cpp ${IMGUI_SOURCES})
+add_executable(pongGame src/main.cpp src/renderer.cpp src/game.cpp ${IMGUI_SOURCES})
 
 
 
