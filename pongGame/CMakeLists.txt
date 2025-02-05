@@ -31,6 +31,6 @@ add_executable(pongGame src/main.cpp src/renderer.cpp src/game.cpp ${IMGUI_SOURC
 
 
 
-target_link_libraries(pong SDL2 SDL2main SDL2_ttf)
+target_link_libraries(pongGame SDL2 SDL2main SDL2_ttf)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
